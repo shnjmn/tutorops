@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm>=8", 'PyXB-X']
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nice_canvas"
+authors = [{ name = "Shen Jiamin", email = "shen_jiamin@u.nus.edu" }]
+description = "A small package facilitating grading and question generation."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+]
+dependencies = ["httpx", "PyXB-X"]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/shen-jiamin/nice-canvas"
+Issues = "https://github.com/shen-jiamin/nice-canvas/issues"
+
+[tool.setuptools_scm]
