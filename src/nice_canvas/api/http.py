@@ -128,13 +128,7 @@ class SubmissionsApi:
 
 class Canvas:
     def __init__(
-        self,
-        base_url="https://canvas.nus.edu.sg",
-        token=None,
-        *,
-        course_id,
-        assignment_id=None,
-        quiz_id=None,
+        self, base_url, token, *, course_id, assignment_id=None, quiz_id=None
     ) -> None:
         self.http = CanvasClient(base_url=base_url, token=token)
         self.files = FilesApi(self.http)
