@@ -128,9 +128,9 @@ class SubmissionsApi:
 
 class Canvas:
     def __init__(
-        self, base_url, token, *, course_id, assignment_id=None, quiz_id=None
+        self, http: CanvasClient, *, course_id, assignment_id=None, quiz_id=None
     ) -> None:
-        self.http = CanvasClient(base_url=base_url, token=token)
+        self.http = http
         self.files = FilesApi(self.http)
         self.quiz_submissions = QuizSubmissionsApi(self.http, course_id, quiz_id)
         self.submissions = SubmissionsApi(self.http, course_id, assignment_id)
