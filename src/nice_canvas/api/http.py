@@ -47,20 +47,16 @@ class CanvasClient:
         resp.raise_for_status()
         return resp
 
-    def get_user_profile(self, user_id):
-        url = f"/api/v1/users/{user_id}/profile"
-        return self.get(url).json()
-
-    def get_quiz_submission_events(self, course_id, quiz_id, quiz_submission_id):
-        url = f"/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{quiz_submission_id}/events"
-        return self.get(url).json().get("quiz_submission_events")
-
 
 class FilesApi:
     def __init__(self, canvas: CanvasClient) -> None:
         self.canvas = canvas
 
     def show(self, file_id):
+        """
+        Get file
+        https://canvas.instructure.com/doc/api/files.html#method.files.api_show
+        """
         url = f"/api/v1/files/{file_id}"
         return self.canvas.get(url).json()
 
@@ -78,6 +74,19 @@ class QuizSubmissionsApi:
         """
         url = f"/api/v1/courses/{self.course_id}/quizzes/{self.quiz_id}/submissions/{quiz_submission_id}"
         return self.canvas.put(url, json={"quiz_submissions": [payload]}).json()
+
+
+class QuizSubmissionQuestionsApi:
+    def __init__(self, canvas: CanvasClient) -> None:
+        self.canvas = canvas
+
+    def index(self, quiz_submission_id):
+        """
+        Get all quiz submission questions.
+        https://canvas.instructure.com/doc/api/quiz_submission_questions.html
+        """
+        url = f"/api/v1/quiz_submissions/{quiz_submission_id}/questions"
+        return self.canvas.get(url).json().get("quiz_submission_questions")
 
 
 class SubmissionsApi:
@@ -126,16 +135,34 @@ class SubmissionsApi:
         return self.canvas.put(url, json=payload).json()
 
 
+class ProfileApi:
+    def __init__(self, canvas: CanvasClient) -> None:
+        self.canvas = canvas
+
+    def settings(self, user_id):
+        """
+        Get user profile settings.
+        https://canvas.instructure.com/doc/api/users.html#method.profile.settings
+        """
+        url = f"/api/v1/users/{user_id}/profile"
+        return self.canvas.get(url).json()
+
+
 class Canvas:
     def __init__(
         self, http: CanvasClient, *, course_id, assignment_id=None, quiz_id=None
     ) -> None:
         self.http = http
+        self.profile = ProfileApi(self.http)
         self.files = FilesApi(self.http)
-        self.quiz_submissions = QuizSubmissionsApi(self.http, course_id, quiz_id)
-        self.submissions = SubmissionsApi(self.http, course_id, assignment_id)
 
-    # POST /api/graphql
+        if course_id and quiz_id:
+            self.quiz_submissions = QuizSubmissionsApi(self.http, course_id, quiz_id)
+            self.quiz_submission_questions = QuizSubmissionQuestionsApi(self.http)
+
+        if course_id and assignment_id:
+            self.submissions = SubmissionsApi(self.http, course_id, assignment_id)
+
     def graphql(self, query, variables=None):
         """
         GraphQL Endpoint
@@ -143,11 +170,3 @@ class Canvas:
         """
         url = "/api/graphql"
         return self.http.post(url, json={"query": query, "variables": variables}).json()
-
-    def get_all_quiz_submission_questions(self, quiz_submission_id):
-        """
-        Get all quiz submission questions.
-        https://canvas.instructure.com/doc/api/quiz_submission_questions.html#method.quizzes/quiz_submission_questions.index
-        """
-        url = f"/api/v1/quiz_submissions/{quiz_submission_id}/questions"
-        return self.http.get(url).json().get("quiz_submission_questions")
