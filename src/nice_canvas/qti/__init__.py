@@ -1,13 +1,13 @@
+from .interop import create_question_bank
 from .question import (
     EssayQuestion,
     FileUploadQuestion,
     FillInMultipleBlanksQuestion,
     ShortAnswerQuestion,
-    build_question_bank,
 )
 
 __all__ = [
-    "build_question_bank",
+    "create_question_bank",
     "EssayQuestion",
     "FileUploadQuestion",
     "FillInMultipleBlanksQuestion",

@@ -158,80 +158,8 @@ class ShortAnswerQuestion(EssayQuestion):
         )
 
 
-def build_question_bank(questions: Iterable[Question]):
+def create_question_bank(questions: Iterable[Question]):
     root = binding.questestinterop()
     for question in questions:
         root.append(question.xml)
     return root
-
-
-if __name__ == "__main__":
-    import zipfile
-
-    xml = build_question_bank(
-        [
-            FileUploadQuestion(
-                "Question 1",
-                "FileUploadQuestion: This is question statement",
-                1.0,
-            ),
-            EssayQuestion(
-                "Question 2",
-                "EssayQuestion: This is another question statement",
-                2.0,
-            ),
-            ShortAnswerQuestion(
-                "Question 3",
-                "ShortAnswerQuestion: This is another question statement",
-                3.0,
-                {
-                    "ffffffff81201150",
-                    "FFFFFFFF81201150",
-                    "0xffffffff81201150",
-                    "0xFFFFFFFF81201150",
-                },
-            ),
-            ShortAnswerQuestion(
-                "Question 4",
-                "ShortAnswerQuestion: This is another question statement",
-                3.0,
-                {
-                    "ffffffff81201150",
-                    "FFFFFFFF81201150",
-                    "0xffffffff81201150",
-                    "0xFFFFFFFF81201150",
-                },
-            ),
-            FillInMultipleBlanksQuestion(
-                "Question 5",
-                "FillInMultipleBlanksQuestion: This is [cr2] another question [err] statement",
-                4.0,
-                {
-                    "cr2": {"0000555555558008", "0x0000555555558008"},
-                    "err": {"0000000000000007", "0x0000000000000007"},
-                },
-            ),
-            FillInMultipleBlanksQuestion(
-                "Question 5",
-                "FillInMultipleBlanksQuestion: This is [cr2] another question [err] statement",
-                4.0,
-                {
-                    "cr2": {"0000555555558008", "0x0000555555558008"},
-                    "err": {"0000000000000007", "0x0000000000000007"},
-                },
-            ),
-            FillInMultipleBlanksQuestion(
-                "Question 5",
-                "FillInMultipleBlanksQuestion: This is [cr2] another question [err] statement",
-                4.0,
-                {
-                    "cr2": {"0000555555558008", "0x0000555555558008"},
-                    "err": {"0000000000000007", "0x0000000000000007"},
-                },
-            ),
-        ]
-    ).toxml("utf-8")
-
-    with zipfile.ZipFile("test.zip", "w") as zf:
-        with zf.open("test.xml", "w") as fp:
-            fp.write(xml)
