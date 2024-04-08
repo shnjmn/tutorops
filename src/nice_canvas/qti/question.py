@@ -45,7 +45,7 @@ class Question:
 
     @property
     def xml(self):
-        root = binding.item(ident=str(id(self)), title=self.title)
+        root = binding.item(ident=hex(id(self)), title=self.title)
         root.append(binding.itemmetadata(self.qtimetadata))
         root.append(self.presentation)
 
@@ -101,7 +101,7 @@ class FillInMultipleBlanksQuestion(Question):
     def presentation(self):
         root = super().presentation
 
-        for i, (ident, answers) in enumerate(self.answers.items()):
+        for ident, answers in self.answers.items():
             root.append(
                 binding.response_lid(
                     binding.material(binding.mattext(ident)),
@@ -111,9 +111,9 @@ class FillInMultipleBlanksQuestion(Question):
                                 binding.material(
                                     binding.mattext(ans, texttype="text/plain")
                                 ),
-                                ident=hex((i << 8) + j),
+                                ident=hex(id(ans)),
                             )
-                            for j, ans in enumerate(answers)
+                            for ans in answers
                         )
                     ),
                     ident="response_{}".format(ident),
