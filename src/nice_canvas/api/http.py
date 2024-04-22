@@ -153,15 +153,36 @@ class Canvas:
         self, http: CanvasClient, *, course_id, assignment_id=None, quiz_id=None
     ) -> None:
         self.http = http
-        self.profile = ProfileApi(self.http)
-        self.files = FilesApi(self.http)
 
-        if course_id and quiz_id:
-            self.quiz_submissions = QuizSubmissionsApi(self.http, course_id, quiz_id)
-            self.quiz_submission_questions = QuizSubmissionQuestionsApi(self.http)
+        self.course_id = course_id
+        self.assignment_id = assignment_id
+        self.quiz_id = quiz_id
 
-        if course_id and assignment_id:
-            self.submissions = SubmissionsApi(self.http, course_id, assignment_id)
+    @property
+    def profile(self):
+        return ProfileApi(self.http)
+
+    @property
+    def files(self):
+        return FilesApi(self.http)
+
+    @property
+    def quiz_submissions(self):
+        if not self.course_id or not self.quiz_id:
+            raise ValueError("course_id and quiz_id are required")
+
+        return QuizSubmissionsApi(self.http, self.course_id, self.quiz_id)
+
+    @property
+    def quiz_submission_questions(self):
+        return QuizSubmissionQuestionsApi(self.http)
+
+    @property
+    def submissions(self):
+        if not self.course_id or not self.assignment_id:
+            raise ValueError("course_id and assignment_id are required")
+
+        return SubmissionsApi(self.http, self.course_id, self.assignment_id)
 
     def graphql(self, query, variables=None):
         """
