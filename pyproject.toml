@@ -16,8 +16,8 @@ classifiers = [
 dynamic = ["version"]
 dependencies = ["httpx", "platformdirs", "PyXB-X", "rich"]
 
-[project.scripts]
-canvas_download_zip = "nice_canvas.cli.canvas_download_zip:main"
+# [project.scripts]
+# canvas_download_zip = "nice_canvas.cli.canvas_download_zip:main"
 
 [project.urls]
 Homepage = "https://github.com/shen-jiamin/nice-canvas"
