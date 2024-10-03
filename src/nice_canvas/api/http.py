@@ -111,6 +111,10 @@ class SubmissionsApi:
         group=False,
         read_status=False,
     ):
+        """
+        List assignment submissions
+        https://canvas.instructure.com/doc/api/submissions.html#method.submissions_api.index
+        """
         url = f"/api/v1/courses/{self.course_id}/assignments/{self.assignment_id}/submissions"
         include = [
             k
