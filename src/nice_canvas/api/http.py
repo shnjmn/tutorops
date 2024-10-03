@@ -133,6 +133,40 @@ class SubmissionsApi:
         ]
         return self.canvas.paginated(url, params={"include[]": include})
 
+    def show(
+        self,
+        user_id,
+        *,
+        submission_history=False,
+        submission_comments=False,
+        rubric_assessment=False,
+        full_rubric_assessment=False,
+        visibility=False,
+        course=False,
+        user=False,
+        read_status=False,
+    ):
+        """
+        Get a single submission.
+        https://canvas.instructure.com/doc/api/submissions.html#method.submissions_api.show
+        """
+        url = f"/api/v1/courses/{self.course_id}/assignments/{self.assignment_id}/submissions/{user_id}"
+        include = [
+            k
+            for k in [
+                submission_history and "submission_history",
+                submission_comments and "submission_comments",
+                rubric_assessment and "rubric_assessment",
+                full_rubric_assessment and "full_rubric_assessment",
+                visibility and "visibility",
+                course and "course",
+                user and "user",
+                read_status and "read_status",
+            ]
+            if k
+        ]
+        return self.canvas.get(url, params={"include[]": include}).json()
+
     def update(self, user_id, payload):
         """
         Grade or comment on a submission.
