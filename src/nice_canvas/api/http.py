@@ -1,10 +1,21 @@
+import os
 import re
 
 import httpx
 
 
 class CanvasClient:
-    def __init__(self, base_url, token) -> None:
+    def __init__(
+        self,
+        base_url=os.getenv("CANVAS_BASE_URL"),
+        token=os.getenv("CANVAS_TOKEN"),
+    ):
+        if not base_url:
+            raise ValueError("CANVAS_BASE_URL is required")
+
+        if not token:
+            raise ValueError("CANVAS_TOKEN is required")
+
         self._http = httpx.Client(
             base_url=base_url,
             follow_redirects=True,
