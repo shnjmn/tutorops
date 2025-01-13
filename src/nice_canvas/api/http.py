@@ -58,6 +58,11 @@ class CanvasClient:
         resp.raise_for_status()
         return resp
 
+    def delete(self, url, *, params=None):
+        resp = self._http.request("DELETE", url, params=params)
+        resp.raise_for_status()
+        return resp
+
 
 class FilesApi:
     def __init__(self, canvas: CanvasClient) -> None:
