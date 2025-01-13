@@ -20,7 +20,7 @@ class CanvasClient:
         return resp
 
     def paginated(self, url, *, key=None, params=None):
-        reg = re.compile('<(?P<url>http\S+)>; rel="(?P<rel>\S+)"')
+        reg = re.compile(r'<(?P<url>http\S+)>; rel="(?P<rel>\S+)"')
 
         while url:
             resp = self.get(url, params=params)
