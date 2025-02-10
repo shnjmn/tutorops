@@ -30,8 +30,13 @@ class CanvasClient:
         resp.raise_for_status()
         return resp
 
-    def paginated(self, url, *, key=None, params=None):
+    def paginated(self, url, *, key=None, params=None, per_page=10):
         reg = re.compile(r'<(?P<url>http\S+)>; rel="(?P<rel>\S+)"')
+
+        if not params:
+            params = {}
+
+        params["per_page"] = per_page
 
         while url:
             resp = self.get(url, params=params)
@@ -116,6 +121,7 @@ class SubmissionsApi:
 
     def index(
         self,
+        per_page=100,
         *,
         submission_history=True,
         submission_comments=False,
@@ -147,7 +153,11 @@ class SubmissionsApi:
             ]
             if k
         ]
-        return self.canvas.paginated(url, params={"include[]": include})
+        return self.canvas.paginated(
+            url,
+            params={"include[]": include},
+            per_page=per_page,
+        )
 
     def show(
         self,
