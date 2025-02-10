@@ -14,7 +14,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dynamic = ["version"]
-dependencies = ["httpx", "platformdirs", "PyXB-X", "rich"]
+dependencies = ["httpx", "PyXB-X", "rich"]
 
 # [project.scripts]
 # canvas_download_zip = "nice_canvas.cli.canvas_download_zip:main"
