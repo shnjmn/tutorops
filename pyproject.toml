@@ -20,7 +20,7 @@ dependencies = ["httpx", "platformdirs", "PyXB-X", "rich"]
 # canvas_download_zip = "nice_canvas.cli.canvas_download_zip:main"
 
 [project.urls]
-Homepage = "https://github.com/shen-jiamin/nice-canvas"
-Issues = "https://github.com/shen-jiamin/nice-canvas/issues"
+Homepage = "https://github.com/shnjmn/nice-canvas"
+Issues = "https://github.com/shnjmn/nice-canvas/issues"
 
 [tool.setuptools_scm]
