@@ -12,4 +12,15 @@ __all__ = [
     "FileUploadQuestion",
     "FillInMultipleBlanksQuestion",
     "ShortAnswerQuestion",
+    "Nice",
 ]
+
+
+class Nice:
+    @staticmethod
+    def str(ans: set[str]):
+        ret = set()
+        for a in ans:
+            ret.add(a.upper())
+            ret.add(a.lower())
+        return ret
