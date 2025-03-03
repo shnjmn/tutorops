@@ -3,6 +3,8 @@ import re
 
 import httpx
 
+from .rubrics_controller import RubricsController
+
 
 class CanvasClient:
     def __init__(
@@ -243,6 +245,10 @@ class Canvas:
     @property
     def quiz_submission_questions(self):
         return QuizSubmissionQuestionsApi(self.http)
+
+    @property
+    def rubrics(self):
+        return RubricsController(self.http, self.course_id)
 
     @property
     def submissions(self):
