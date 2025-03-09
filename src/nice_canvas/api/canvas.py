@@ -107,3 +107,23 @@ class Canvas:
         """
         url = "/api/graphql"
         return self.http.post(url, json={"query": query, "variables": variables}).json()
+
+    def list_active_students(self):
+        query = """
+        query ListActiveStudents($course_id: ID!) {
+          course(id: $course_id) {
+            usersConnection(
+              filter: {enrollmentTypes: StudentEnrollment, enrollmentStates: active}
+            ) {
+              nodes {
+                _id
+                name
+                sisId
+                integrationId
+              }
+            }
+          }
+        }
+        """
+        resp = self.graphql(query, {"course_id": self.course_id})
+        return resp["data"]["course"]["usersConnection"]["nodes"]
