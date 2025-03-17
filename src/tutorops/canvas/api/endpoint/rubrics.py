@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-from .http import CanvasClient
+from ..http import CanvasClient
 
 
 class RubricsApi:

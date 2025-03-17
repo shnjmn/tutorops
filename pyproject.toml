@@ -3,7 +3,7 @@ requires = ["setuptools>=64", "setuptools_scm>=8", 'PyXB-X']
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "nice_canvas"
+name = "tutorops"
 authors = [{ name = "Shen Jiamin", email = "shen_jiamin@u.nus.edu" }]
 description = "A small package facilitating grading and question generation."
 readme = "README.md"
@@ -17,10 +17,10 @@ dynamic = ["version"]
 dependencies = ["httpx", "PyXB-X", "rich"]
 
 # [project.scripts]
-# canvas_download_zip = "nice_canvas.cli.canvas_download_zip:main"
+# canvas_download_zip = "tutorops.cli.canvas_download_zip:main"
 
 [project.urls]
-Homepage = "https://github.com/shnjmn/nice-canvas"
-Issues = "https://github.com/shnjmn/nice-canvas/issues"
+Homepage = "https://github.com/shnjmn/tutorops"
+Issues = "https://github.com/shnjmn/tutorops/issues"
 
 [tool.setuptools_scm]

@@ -19,7 +19,7 @@ class QTIBinding(Command):
                 "-u",
                 "http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd",
                 "-m",
-                "nice_canvas.qti.binding",
+                "tutorops.canvas.qti.binding",
             ],
             cwd="src",
         )

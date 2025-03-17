@@ -1,4 +1,4 @@
-from .http import CanvasClient
+from ..http import CanvasClient
 
 
 class SubmissionsApi:
