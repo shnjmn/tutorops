@@ -14,7 +14,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dynamic = ["version"]
-dependencies = ["httpx", "PyXB-X", "rich"]
+dependencies = ["httpx", "PyXB-X", "python-dotenv"]
 
 # [project.scripts]
 # canvas_download_zip = "tutorops.cli.canvas_download_zip:main"
