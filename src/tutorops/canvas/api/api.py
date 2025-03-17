@@ -1,17 +1,17 @@
+from .client import CanvasClient
 from .endpoint.files import FilesApi
 from .endpoint.quiz_submission_questions import QuizSubmissionQuestionsApi
 from .endpoint.quiz_submissions import QuizSubmissionsApi
 from .endpoint.rubrics import RubricsApi
 from .endpoint.submissions import SubmissionsApi
 from .endpoint.users import UsersApi
-from .http import CanvasClient
 
 
-class Canvas:
+class CanvasAPI:
     def __init__(
-        self, http: CanvasClient, *, course_id, assignment_id=None, quiz_id=None
+        self, http: CanvasClient = None, *, course_id, assignment_id=None, quiz_id=None
     ) -> None:
-        self.http = http
+        self.http = http or CanvasClient()
 
         self.course_id = course_id
         self.assignment_id = assignment_id

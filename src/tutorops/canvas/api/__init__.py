@@ -1,4 +1,4 @@
-from .canvas import Canvas
-from .http import CanvasClient
+from .api import CanvasAPI
+from .client import CanvasClient
 
-__all__ = ["Canvas", "CanvasClient"]
+__all__ = ["CanvasAPI", "CanvasClient"]

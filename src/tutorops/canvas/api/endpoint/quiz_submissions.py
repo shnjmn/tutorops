@@ -1,4 +1,4 @@
-from ..http import CanvasClient
+from ..client import CanvasClient
 
 
 class QuizSubmissionsApi:

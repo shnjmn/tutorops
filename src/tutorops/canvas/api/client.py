@@ -1,10 +1,7 @@
 import os
 import re
-from logging import getLogger
 
 import httpx
-
-log = getLogger(__name__)
 
 
 class CanvasClient:
