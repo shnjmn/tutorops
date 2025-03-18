@@ -9,7 +9,12 @@ from .endpoint.users import UsersApi
 
 class CanvasAPI:
     def __init__(
-        self, http: CanvasClient = None, *, course_id, assignment_id=None, quiz_id=None
+        self,
+        http: CanvasClient | None = None,
+        *,
+        course_id,
+        assignment_id=None,
+        quiz_id=None,
     ) -> None:
         self.http = http or CanvasClient()
 

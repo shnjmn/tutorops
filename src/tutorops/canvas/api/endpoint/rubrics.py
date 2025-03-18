@@ -85,7 +85,7 @@ class RubricsApi:
         """
         url = f"/api/v1/courses/{self.course_id}/rubrics/{rubric_id}"
 
-        params = {}
+        params: dict[str, Any] = {}
 
         include = [
             k
