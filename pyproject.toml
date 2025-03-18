@@ -1,9 +1,14 @@
 [build-system]
-requires = ["setuptools>=64", "setuptools_scm>=8", 'PyXB-X']
+requires = [
+    "setuptools>=64",    # Build backend
+    "setuptools_scm>=8", # Versioning from SCM
+    'PyXB-X',            # XML schema binding
+]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "tutorops"
+dynamic = ["version"]
 authors = [{ name = "Shen Jiamin", email = "shen_jiamin@u.nus.edu" }]
 description = "A small package facilitating grading and question generation."
 readme = "README.md"
@@ -11,16 +16,17 @@ requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Operating System :: OS Independent",
 ]
-dynamic = ["version"]
-dependencies = ["httpx", "PyXB-X", "python-dotenv"]
-
-# [project.scripts]
-# canvas_download_zip = "tutorops.cli.canvas_download_zip:main"
+dependencies = [
+    "httpx",         # HTTP client
+    "python-dotenv", # Environment variables
+    "PyXB-X",        # XML schema binding
+]
 
 [project.urls]
 Homepage = "https://github.com/shnjmn/tutorops"
 Issues = "https://github.com/shnjmn/tutorops/issues"
 
-[tool.setuptools_scm]
+[tool.mypy]
+exclude = ["^src/tutorops/canvas/qti/.*\\.py", "^venv/.*"]
+follow_untyped_imports = true
