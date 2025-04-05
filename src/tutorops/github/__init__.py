@@ -6,7 +6,7 @@ import httpx
 class GitHub:
     def __init__(self, token: str = None):
         if not token:
-            token = os.getenv("GITHUB_TOKEN")
+            token = os.getenv("GITHUB_PAT")
 
         if not token:
             raise ValueError("GitHub token is required")
