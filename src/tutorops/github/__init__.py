@@ -22,6 +22,24 @@ class GitHub:
             follow_redirects=True,
         )
 
+    def patch(self, url: str, **kwargs):
+        resp = self.http.patch(url, **kwargs)
+        resp.raise_for_status()
+        return resp.json()
+
+    def get(self, url: str):
+        resp = self.http.get(url)
+        resp.raise_for_status()
+        return resp.json()
+
+    def list_commits(self, full_name: str):
+        """
+        https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#list-commits
+        """
+        resp = self.http.get(f"/repos/{full_name}/commits")
+        resp.raise_for_status()
+        return resp.json()
+
     def list_accepted_assignments(self, assignment_id: int, per_page: int = 100):
         """
         https://docs.github.com/en/rest/classroom/classroom?apiVersion=2022-11-28#list-accepted-assignments-for-an-assignment
@@ -33,15 +51,18 @@ class GitHub:
         resp.raise_for_status()
         return resp.json()
 
-    def get_latest_release(self, owner: str, repo: str):
-        resp = self.http.get(f"/repos/{owner}/{repo}/releases/latest")
+    def get_latest_release(self, full_name: str):
+        resp = self.http.get(f"/repos/{full_name}/releases/latest")
         resp.raise_for_status()
         return resp.json()
 
-    def create_release(self, owner: str, repo: str, tag_name: str, name: str):
-        resp = self.http.post(
-            f"/repos/{owner}/{repo}/releases",
-            json={"tag_name": tag_name, "name": name},
-        )
+    def create_release(
+        self, full_name: str, tag_name: str, name: str, *, target_commitish=None
+    ):
+        payload = {"tag_name": tag_name, "name": name}
+        if target_commitish:
+            payload["target_commitish"] = target_commitish
+
+        resp = self.http.post(f"/repos/{full_name}/releases", json=payload)
         resp.raise_for_status()
         return resp.json()
