@@ -1,4 +1,5 @@
 from .client import CanvasClient
+from .endpoint.assignments import AssignmentsApi
 from .endpoint.files import FilesApi
 from .endpoint.quiz_submission_questions import QuizSubmissionQuestionsApi
 from .endpoint.quiz_submissions import QuizSubmissionsApi
@@ -23,8 +24,11 @@ class CanvasAPI:
         self.quiz_id = quiz_id
 
     @property
-    def users(self):
-        return UsersApi(self.http)
+    def assignments(self):
+        if not self.course_id:
+            raise ValueError("course_id is required")
+
+        return AssignmentsApi(self.http, self.course_id)
 
     @property
     def files(self):
@@ -51,6 +55,10 @@ class CanvasAPI:
             raise ValueError("course_id and assignment_id are required")
 
         return SubmissionsApi(self.http, self.course_id, self.assignment_id)
+
+    @property
+    def users(self):
+        return UsersApi(self.http)
 
     def graphql(self, query, variables=None):
         """
